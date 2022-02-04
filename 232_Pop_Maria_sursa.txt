@@ -1,0 +1,781 @@
+CREARE DE TABELE:
+
+create table PROFIL(PROFIL_ID number(4) primary key, 
+                    PROFIL_NUME varchar2(40), 
+                    NR_LOCURI number(2)); 
+
+create table SPECIALIZARE (SPECIALIZARE_ID number(4) primary key, 
+                           SPECIALIZARE_NUME varchar2(40), 
+                           SPECIALIZARE_DURATA number(1), 
+                           SPECIALIZARE_NR_LOCURI number(2)); 
+
+create table CLASA (CLASA_ID number(4) primary key, 
+                    CLASA_NUMAR number(2), 
+                    CLASA_LITERA varchar2(1), 
+                    NR_ELEVI number(2)); 
+
+create table ELEVI (ELEV_ID number(4) primary key, 
+                    ELEV_NUME varchar2(30), 
+                    ELEV_PRENUME varchar2(30), 
+                    NR_TELEFON number(10)); 
+      
+create table BIBLIOTECA (BIBLIOTECA_ID number(4) primary key, 
+                         NR_VOLUME number(3), 
+                         SPATIU_OCUPAT number(2), 
+                         NR_SECTIUNI number(2)); 
+
+create table PROFESORI (PROFESOR_ID number(4) primary key, 
+                        PROFESOR_NUME varchar2(30), 
+                        PROFESOR_PRENUME varchar2(30), 
+                        TELEFON NUMBER(10), 
+                        SALARIU number(4), 
+                        EMAIL varchar2(30)); 
+
+create table ARHIVAR (ARHIVAR_ID number(4) primary key, 
+                      ARHIVAR_NUME varchar2(30), 
+                      ARHIVAR_PRENUME varchar2(30), 
+                        A_TELEFON NUMBER(10), 
+                        A_SALARIU number(4), 
+                        A_EMAIL varchar2(30)); 
+
+create table MEDIC (MEDIC_ID number(4) primary key, 
+                      MEDIC_NUME varchar2(30), 
+                      MEDIC_PRENUME varchar2(30), 
+                        M_TELEFON NUMBER(10), 
+                        M_SALARIU number(4), 
+                        M_EMAIL varchar2(30)); 
+
+create table TEREN_SPORT (TEREN_ID number(4) primary key, 
+                          TEREN_TIP varchar2(30), 
+                          DIMENSIUNE number(3));
+
+create table CABINET_MEDICAL (CABINET_ID number(4) primary key, 
+                              CABINET_SPATIU number(2));
+
+create table ARHIVA (ARHIVA_ID number(4) primary key, 
+                     ARHIVA_SPATIU number(2));
+
+create table BIBLIOTECAR (BIBLIOTECAR_ID number(4) primary key, 
+                        BIBLIOTECAR_NUME varchar2(30), 
+                        BIBLIOTECAR_PRENUME varchar2(30), 
+                        B_TELEFON NUMBER(10), 
+                        B_SALARIU number(4), 
+                        B_EMAIL varchar2(30));
+
+create table INGRIJITOR (INGRIJITOR_ID number(4) primary key, 
+                        INGRIJITOR_NUME varchar2(30), 
+                        INGRIJITOR_PRENUME varchar2(30), 
+                        I_TELEFON NUMBER(10), 
+                        I_SALARIU number(4), 
+                        I_EMAIL varchar2(30));
+
+create table CLADIRI_ANEXE (CLADIRE_ID number(4) primary key, 
+                            CLADIRE_TIP varchar2(30), 
+                            CLADIRE_SPATIU number(2));
+
+ADAUGARE DE FOREIGN KEYS:
+
+ALTER TABLE SPECIALIZARE 
+ADD PROFIL_ID NUMBER(4); 
+
+ALTER TABLE SPECIALIZARE 
+ADD FOREIGN KEY (PROFIL_ID) REFERENCES PROFIL(PROFIL_ID);
+
+ALTER TABLE CLASA 
+ADD SPECIALIZARE_ID NUMBER(4); 
+
+ALTER TABLE CLASA  
+ADD FOREIGN KEY (SPECIALIZARE_ID) REFERENCES SPECIALIZARE(SPECIALIZARE_ID);
+
+ALTER TABLE MEDIC 
+ADD CABINET_ID NUMBER(4); 
+
+ALTER TABLE MEDIC 
+ADD FOREIGN KEY(CABINET_ID) REFERENCES CABINET_MEDICAL(CABINET_ID); 
+
+ALTER TABLE ARHIVAR 
+ADD ARHIVA_ID NUMBER(4); 
+
+ALTER TABLE ARHIVAR 
+ADD FOREIGN KEY (ARHIVA_ID) REFERENCES ARHIVA(ARHIVA_ID); 
+
+ALTER TABLE INGRIJITOR 
+ADD CLADIRE_ID NUMBER(4); 
+
+ALTER TABLE INGRIJITOR 
+ADD FOREIGN KEY (CLADIRE_ID) REFERENCES CLADIRI_ANEXE(CLADIRE_ID); 
+
+ALTER TABLE BIBLIOTECAR 
+ADD BIBLIOTECA_ID NUMBER(4); 
+
+ALTER TABLE BIBLIOTECAR 
+ADD FOREIGN KEY (BIBLIOTECA_ID) REFERENCES BIBLIOTECA(BIBLIOTECA_ID); 
+
+ALTER TABLE ELEVI 
+ADD CLASA_ID NUMBER(4); 
+
+ALTER TABLE ELEVI 
+ADD FOREIGN KEY (CLASA_ID) REFERENCES CLASA(CLASA_ID); 
+
+CREARE TABELE ASOCIATIVE:
+
+CREATE TABLE PREDA(PROFESOR_ID NUMBER(4) REFERENCES PROFESORI(PROFESOR_ID), 
+                   CLASA_ID NUMBER(4) REFERENCES CLASA(CLASA_ID), 
+                   DISCIPLINA VARCHAR2(30), 
+                   PRIMARY KEY(PROFESOR_ID, CLASA_ID));
+
+CREATE TABLE FOLOSESTE(PROFESOR_ID NUMBER(4) REFERENCES PROFESORI(PROFESOR_ID), 
+                   TEREN_ID NUMBER(4) REFERENCES TEREN_SPORT(TEREN_ID), 
+                   SPORT VARCHAR2(30), 
+                   PRIMARY KEY(PROFESOR_ID, TEREN_ID));  
+
+INSERARI IN TABELA "PROFIL":
+
+INSERT INTO PROFIL 
+VALUES (1, 'REAL', 50); 
+
+INSERT INTO PROFIL 
+VALUES(2, 'UMAN', 40); 
+
+INSERT INTO PROFIL 
+VALUES(3, 'TEHNOLOGIC', 20); 
+
+INSERT INTO PROFIL 
+VALUES(4, 'VOCATIONAL', 20); 
+
+INSERT INTO PROFIL  
+VALUES(5, 'SERVICII', 10);
+
+INSERARI IN TABELA "SPECIALIZARE":
+
+INSERT INTO SPECIALIZARE 
+VALUES (6, 'MATEMATICA-INFORMATICA', 4, 40, 1); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (7, 'STIINTELE-NATURII', 4, 28, 1); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (9, 'STIINTE-SOCIALE', 4, 28, 2); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (10, 'MECANICA', 3, 28, 3); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (11, 'ELECTRICA', 3, 28, 3); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (12, 'ECONOMIC', 4, 28, 5); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (13, 'COMERT', 4, 28, 5); 
+
+INSERT INTO SPECIALIZARE 
+VALUES (8, 'FILOLOGIE', 4, 28, 2); 
+
+INSERARI IN TABELA "CLASA":
+
+INSERT INTO CLASA 
+VALUES (1, 9, 'A', 27, 6); 
+
+INSERT INTO CLASA 
+VALUES(2, 10, 'B', 28, 7); 
+
+INSERT INTO CLASA 
+VALUES(3, 11, 'A', 25, 8); 
+
+INSERT INTO CLASA 
+VALUES(4, 9, 'B', 26, 9); 
+
+INSERT INTO CLASA 
+VALUES(5, 12, 'A', 26, 10); 
+
+INSERT INTO CLASA 
+VALUES(6, 12, 'B', 27, 11); 
+
+INSERT INTO CLASA 
+VALUES(7, 12, 'C', 24, 13); 
+
+INSERT INTO CLASA 
+VALUES(8, 11, 'B', 25, 12); 
+
+INSERARI IN TABELA "ELEVI":
+
+INSERT INTO ELEVI 
+VALUES(10, 'POPESCU', 'ANDREI', 0712345678, 1); 
+
+INSERT INTO ELEVI 
+VALUES(11, 'ANTONESCU', 'DARIA', 0752345678, 1); 
+
+INSERT INTO ELEVI 
+VALUES(12, 'OPREA', 'ANDREEA', 0752545678, 2); 
+
+INSERT INTO ELEVI 
+VALUES(13, 'OPRESCU', 'DANIEL', 0752545978, 2); 
+
+INSERT INTO ELEVI 
+VALUES(14, 'SERBAN', 'MIHAI', 0752845978, 3); 
+
+INSERT INTO ELEVI 
+VALUES(15, 'STANCIU', 'DAVID', 0792845978, 3); 
+
+INSERT INTO ELEVI 
+VALUES(16, 'IONESCU', 'ALINA', 0790845978, 4); 
+
+INSERT INTO ELEVI 
+VALUES(17, 'ION', 'VALENTIN', 0790845078, 5); 
+
+INSERT INTO ELEVI 
+VALUES(18, 'ARSENE', 'MADALINA', 0790843078, 6); 
+
+INSERT INTO ELEVI 
+VALUES(19, 'GRIGORE', 'GABRIELA', 0730843078, 7); 
+
+INSERT INTO ELEVI 
+VALUES(20, 'SANDU', 'MIRUNA', 0730643078, 8); 
+
+INSERARI IN TABELA "BIBLIOTECA":
+
+INSERT INTO BIBLIOTECA
+VALUES(1, 100, 45, 2);
+
+INSERT INTO BIBLIOTECA 
+VALUES(2, 220, 90, 5); 
+
+INSERT INTO BIBLIOTECA 
+VALUES(3, 90, 50, 2); 
+
+INSERT INTO BIBLIOTECA 
+VALUES(4, 190, 65, 3); 
+
+INSERT INTO BIBLIOTECA 
+VALUES(5, 200, 78, 4); 
+
+INSERARI IN TABELA "TEREN_SPORT":
+
+INSERT INTO TEREN_SPORT 
+VALUES (1, 'FOTBAL', 500); 
+
+INSERT INTO TEREN_SPORT 
+VALUES (2, 'TENIS', 200); 
+
+INSERT INTO TEREN_SPORT 
+VALUES (3, 'BASCHET', 300); 
+
+INSERT INTO TEREN_SPORT 
+VALUES (4, 'ATLETISM', 400); 
+
+INSERT INTO TEREN_SPORT 
+VALUES (5, 'BASEBALL', 400); 
+
+INSERARI IN TABELA "CLADIRI_ANEXE":
+
+INSERT INTO CLADIRI_ANEXE 
+VALUES (5, 'CAMERA DE SERVICIU', 50); 
+
+INSERT INTO CLADIRI_ANEXE 
+VALUES (6, 'ATELIER', 60); 
+
+INSERT INTO CLADIRI_ANEXE 
+VALUES (7, 'CAMERA DE SERVICIU 2', 50); 
+
+INSERT INTO CLADIRI_ANEXE 
+VALUES (8, 'CAMERA DE SERVICIU 3', 50); 
+
+INSERT INTO CLADIRI_ANEXE 
+VALUES (9, 'ATELIER 2', 60); 
+
+INSERARI IN TABELA "ARHIVA":
+
+INSERT INTO ARHIVA 
+VALUES (1, 20); 
+
+INSERT INTO ARHIVA 
+VALUES (2, 30); 
+
+INSERT INTO ARHIVA 
+VALUES (3, 15); 
+
+INSERT INTO ARHIVA 
+VALUES (4, 23); 
+
+INSERT INTO ARHIVA 
+VALUES (5, 29); 
+
+INSERARI IN TABELA "CABINET MEDICAL":
+
+INSERT INTO CABINET_MEDICAL 
+VALUES (1, 40); 
+
+INSERT INTO CABINET_MEDICAL 
+VALUES (2, 50); 
+
+INSERT INTO CABINET_MEDICAL 
+VALUES (3, 39); 
+
+INSERT INTO CABINET_MEDICAL 
+VALUES (4, 45); 
+
+INSERT INTO CABINET_MEDICAL 
+VALUES (5, 35); 
+
+INSERARI IN TABELA "PROFESORI":
+
+INSERT INTO PROFESORI 
+VALUES (10, 'CIOCARLAN', 'DORINA', 0712345678, 3000, 'dorina@yahoo.com'); 
+
+INSERT INTO PROFESORI 
+VALUES (11, 'BLOSCENCO', 'ALINA', 0714345678, 3500, 'alina34@yahoo.com'); 
+
+INSERT INTO PROFESORI 
+VALUES (12, 'MUNTEANU', 'RARES', 0714346778, 3200, 'mrares@yahoo.com'); 
+
+INSERT INTO PROFESORI 
+VALUES (13, 'IVAN', 'ANDREI', 0714396778, 3700, 'ivan3@yahoo.com'); 
+
+INSERT INTO PROFESORI 
+VALUES (14, 'DRAGAN', 'DAVID', 0734396778, 3250, 'ddragan@yahoo.com'); 
+
+INSERT INTO PROFESORI 
+VALUES (15, 'DOBRE', 'FLORINA', 0734396478, 3900, 'dflorina@yahoo.com');
+
+INSERARI IN TABELA "INGRIJITOR":
+
+INSERT INTO INGRIJITOR 
+VALUES (20, 'POPA', 'VASILICA', 0798765432, 2000, 'pvasilica@yahoo.com', 5); 
+
+INSERT INTO INGRIJITOR 
+VALUES (21, 'MOCANU', 'ALEXANDRU', 0798755432, 2500, 'MOCAALE@yahoo.com', 6); 
+
+INSERT INTO INGRIJITOR 
+VALUES (22, 'COJOCARU', 'PAUL', 0793255432, 2240, 'COJOPAUL@yahoo.com', 7); 
+
+INSERT INTO INGRIJITOR 
+VALUES (23, 'BORDEI', 'RAUL', 0793235432, 2300, 'raulbo@yahoo.com', 8); 
+
+INSERT INTO INGRIJITOR 
+VALUES (24, 'SIRBU', 'GEORGIANA', 0793239432, 2000, 'GEOSIRBU@yahoo.com', 9); 
+
+INSERT INTO INGRIJITOR 
+VALUES (25, 'VOICULESCU', 'VIORICA', 0793234432, 2500, 'vviorica@yahoo.com', 9); 
+
+INSERARI IN TABELA "ARHIVAR":
+
+INSERT INTO ARHIVAR 
+VALUES (30, 'DRAGNEA', 'OLGUTA', 0725737491, 4000, 'dolga@yahoo.com', 1); 
+
+INSERT INTO ARHIVAR 
+VALUES (31, 'GOLEA', 'VIORICA', 0775737491, 4100, 'viog@yahoo.com', 2); 
+
+INSERT INTO ARHIVAR 
+VALUES (32, 'MARIN', 'RUXANDRA', 0775737651, 4200, 'mruxandra@yahoo.com', 3); 
+
+INSERT INTO ARHIVAR 
+VALUES (33, 'PRUS', 'VIOREL', 0776537651, 4000, 'pvio@yahoo.com', 4); 
+
+INSERT INTO ARHIVAR 
+VALUES (34, 'ALEXE', 'CATRINA', 0776587651, 4700, 'alexecat@yahoo.com', 5); 
+
+INSERT INTO ARHIVAR 
+VALUES (35, 'AVRAMESCU', 'ION', 0776547651, 4500, 'AVRION@yahoo.com', 5);
+
+INSERARI IN TABELA "MEDIC":
+
+INSERT INTO MEDIC 
+VALUES (40, 'OXFORD', 'ANDREI', 0712345678, 5000, 'oxforda@yahoo.com', 1); 
+
+INSERT INTO MEDIC 
+VALUES (41, 'ORBAN', 'DAN', 0712344678, 5100, 'DANORBAN@yahoo.com', 2); 
+
+INSERT INTO MEDIC 
+VALUES (42, 'GHEORGHITA', 'MARIANA', 0732344678, 5200, 'MARIANAGHEO@yahoo.com', 3); 
+
+INSERT INTO MEDIC 
+VALUES (43, 'STANICA', 'ELEONORA', 0798344678, 5300, 'ELESTANICA@yahoo.com', 4); 
+
+INSERT INTO MEDIC 
+VALUES (44, 'BALAN', 'PAUL', 0798343278, 5400, 'PAUL_BALAN@yahoo.com', 5); 
+
+INSERT INTO MEDIC 
+VALUES (45, 'ANISIE', 'MARIANA', 0798443278, 4900, 'ANIMARIANA@yahoo.com', 5); 
+
+INSERARI IN TABELA "BIBLIOTECAR":
+
+INSERT INTO BIBLIOTECAR
+VALUES (1, 'POPESCU', 'ANDREI', 0712345678, 3000, 'PANDREI@YAHOO.COM', 2);
+
+INSERT INTO BIBLIOTECAR
+VALUES (2, 'POP', 'GHEORGHE', 0713345678, 3200, 'PGHEO@YAHOO.COM', 1);
+
+INSERT INTO BIBLIOTECAR
+VALUES (3, 'IONESCU', 'ALEXANDRU', 0713355678, 3150, 'IONALE@YAHOO.COM', 4);
+
+INSERT INTO BIBLIOTECAR
+VALUES (4, 'ION', 'ALEXANDRU', 0763355678, 3100, 'IONALE@YAHOO.COM', 5);
+
+INSERT INTO BIBLIOTECAR
+VALUES (5, 'POPA', 'STEFAN', 0763395678, 3500, 'STEFPOPA@YAHOO.COM', 3);
+
+INSERARI IN TABELA ASOCIATIVA "PREDA":
+
+INSERT INTO PREDA 
+VALUES (10, 1, 'MATEMATICA'); 
+
+INSERT INTO PREDA 
+VALUES (10, 2, 'MATEMATICA'); 
+
+INSERT INTO PREDA 
+VALUES (11, 1, 'BIOLOGIE'); 
+
+INSERT INTO PREDA 
+VALUES (12, 3, 'CHIMIE'); 
+
+INSERT INTO PREDA 
+VALUES (12, 4, 'CHIMIE'); 
+
+INSERT INTO PREDA 
+VALUES (13, 5, 'FIZICA'); 
+
+INSERT INTO PREDA 
+VALUES (12, 5, 'FIZICA'); 
+
+INSERT INTO PREDA 
+VALUES (14, 6, 'ISTORIE'); 
+
+INSERT INTO PREDA 
+VALUES (14, 7, 'ISTORIE'); 
+
+INSERT INTO PREDA 
+VALUES (15, 8, 'GEOGRAFIE'); 
+
+INSERT INTO PREDA 
+VALUES (15, 1, 'GEOGRAFIE'); 
+
+INSERT INTO PREDA 
+VALUES (15, 2, 'GEOGRAFIE'); 
+
+INSERARI IN TABELA ASOCIATIVA "FOLOSESTE":
+
+INSERT INTO FOLOSESTE 
+VALUES (11, 1, 'FOTBAL'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (11, 2, 'TENIS'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (12, 1, 'FOTBAL'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (12, 3, 'BASCHET'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (11, 4, 'ATLETISM'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (11, 5, 'BASEBALL'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (12, 2, 'TENIS'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (12, 4, 'ATLETISM'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (12, 5, 'BASEBALL'); 
+
+INSERT INTO FOLOSESTE 
+VALUES (11, 3, 'BASCHET'); 
+
+
+REZOLVAREA EXERCITIULUI 6:
+
+create or replace procedure date_profesor(numar numeric) as
+
+type tablou_indexat is table of profesori.profesor_nume%type index by binary_integer;
+p_nume tablou_indexat;
+type tablou_imbricat is table of elevi.elev_nume%type;
+e_nume tablou_imbricat;
+
+begin
+    select profesor_nume
+    bulk collect into p_nume
+    from profesori
+    where length(profesor_nume) < numar;
+    
+    if p_nume.count = 0 then
+        dbms_output.put_line('Nu a fost gasit niciun profesor');
+    else
+        for i in p_nume.first..p_nume.last loop
+            dbms_output.put_line(p_nume(i));
+        end loop;
+    end if;
+    
+    select elev_nume
+    bulk collect into e_nume
+    from elevi
+    where length(elev_nume) < numar;
+    
+    if e_nume.count = 0 then
+        dbms_output.put_line('Nu a fost gasit niciun elev');
+    else
+        for i in e_nume.first..e_nume.last loop
+            dbms_output.put_line(e_nume(i));
+        end loop;
+    end if;
+end date_profesor;
+/
+
+begin
+    date_profesor(4);
+end;
+/
+
+
+REZOLVAREA EXERCITIULUI 7:
+
+create or replace procedure numar_specializari(numar numeric) as
+    cursor c is
+        select profil_nume nume, count(specializare_nume) nr
+        from profil p, specializare s
+        where p.profil_id = s.profil_id(+)
+        group by profil_nume;
+begin
+    for i in c loop
+        if i.nr > numar then
+            dbms_output.put_line('Profilul ' || i.nume || ' are mai mult de ' || numar || ' specializari');
+        else
+            dbms_output.put_line('Profilul ' || i.nume || ' nu are mai mult de ' || numar || ' specializari');
+        end if;
+    end loop;
+end numar_specializari;
+/
+
+begin
+    numar_specializari(1);
+end;
+/
+
+
+REZOLVAREA EXERCITIULUI 8:
+
+create or replace function nume_elev (v_nume specializare.specializare_nume%type)
+return varchar2 is nume_complet elevi.elev_nume%type;
+begin
+    select e.elev_nume
+    into nume_complet
+    from elevi e join clasa c on (e.clasa_id = c.clasa_id)
+    join specializare s on (c.specializare_id = s.specializare_id)
+    where s.specializare_nume = v_nume;
+    return nume_complet;
+exception
+    when no_data_found then
+        raise_application_error(-20000, 'Nu exista elevi care studiaza la specializarea data');
+    when too_many_rows then
+        raise_application_error(-20001, 'Exista mai multi elevi');
+    when others then
+        raise_application_error(-20002, 'Alta eroare');
+end nume_elev;
+/
+
+begin
+    dbms_output.put_line(nume_elev('STIINTE-SOCIALE'));
+end;
+/
+
+
+REZOLVAREA EXERCITIULUI 9:
+
+create or replace procedure nume_profesor(v_nume profil.profil_nume%type)
+is
+    nume profesori.profesor_nume%type;
+begin
+    select distinct p.profesor_nume
+    into nume
+    from profesori p join preda pr on (p.profesor_id = pr.profesor_id)
+    join clasa c on (c.clasa_id = pr.clasa_id)
+    join specializare s on (s.specializare_id = c.specializare_id)
+    join profil pro on (pro.profil_id = s.profil_id)
+    where pro.profil_nume = v_nume;
+    
+    dbms_output.put_line(nume);
+    
+exception
+
+    when no_data_found then
+        raise_application_error(-20000, 'Nu exista un profil cu numele dat');
+    when too_many_rows then
+        raise_application_error(-20001, 'Exista mai multi profesori care predau la acest profil');
+    when others then
+        raise_application_error(-20002, 'Alta eroare');
+
+end nume_profesor;
+/
+
+begin
+    nume_profesor('UMAN');
+end;
+/
+
+
+REZOLVAREA EXERCITIULUI 10:
+
+create or replace trigger trig10
+    before insert or update or delete on arhiva
+begin
+    if arhiva_spatiu < 10 then
+        raise_application_error(-20001, 'Tabelul nu poate fi actualizat');
+    end if;
+end;
+/
+
+insert into arhiva values(6, 5);
+/
+
+
+REZOLVAREA EXERCITIULUI 11:
+
+create or replace trigger trig11
+    before update of a_salariu on arhivar
+    for each row
+begin
+    if (:new.a_salariu < :old.a_salariu) then
+        raise_application_error(-20002, 'Salariul nu poate fi micsorat');
+    end if;
+end;
+/
+
+update arhivar
+set a_salariu = a_salariu - 100;
+
+
+REZOLVAREA EXERCITIULUI 12:
+
+create table erori (user_id nvarchar2(100), nume_baza nvarchar2(100), erori nvarchar2(2000), data date);
+
+create or replace trigger trig12
+after servererror 
+on database
+begin
+    insert into erori values (sys.login_user, sys.database_name, 'EROARE', sysdate);
+end;
+
+
+REZOLVAREA EXERCITIULUI 13:
+
+create or replace package pachet13 as
+    -- 6
+    procedure date_profesor(numar numeric);
+    -- 7
+    procedure numar_specializari(numar numeric);
+    -- 8
+    function nume_elev (v_nume specializare.specializare_nume%type)
+    return varchar2;
+    -- 9
+    procedure nume_profesor(v_nume profil.profil_nume%type);
+end;
+/
+
+create or replace package body pachet13 as
+
+    -- 6
+    procedure date_profesor(numar numeric) as
+
+type tablou_indexat is table of profesori.profesor_nume%type index by binary_integer;
+p_nume tablou_indexat;
+type tablou_imbricat is table of elevi.elev_nume%type;
+e_nume tablou_imbricat;
+
+begin
+    select profesor_nume
+    bulk collect into p_nume
+    from profesori
+    where length(profesor_nume) < numar;
+    
+    if p_nume.count = 0 then
+        dbms_output.put_line('Nu a fost gasit niciun profesor');
+    else
+        for i in p_nume.first..p_nume.last loop
+            dbms_output.put_line(p_nume(i));
+        end loop;
+    end if;
+    
+    select elev_nume
+    bulk collect into e_nume
+    from elevi
+    where length(elev_nume) < numar;
+    
+    if e_nume.count = 0 then
+        dbms_output.put_line('Nu a fost gasit niciun elev');
+    else
+        for i in e_nume.first..e_nume.last loop
+            dbms_output.put_line(e_nume(i));
+        end loop;
+    end if;
+end date_profesor;
+
+    -- 7
+    procedure numar_specializari(numar numeric) as
+    cursor c is
+        select profil_nume nume, count(specializare_nume) nr
+        from profil p, specializare s
+        where p.profil_id = s.profil_id(+)
+        group by profil_nume;
+begin
+    for i in c loop
+        if i.nr > numar then
+            dbms_output.put_line('Profilul ' || i.nume || ' are mai mult de ' || numar || ' specializari');
+        else
+            dbms_output.put_line('Profilul ' || i.nume || ' nu are mai mult de ' || numar || ' specializari');
+        end if;
+    end loop;
+end numar_specializari;
+
+    -- 8
+    function nume_elev (v_nume specializare.specializare_nume%type)
+return varchar2 is nume_complet elevi.elev_nume%type;
+begin
+    select e.elev_nume
+    into nume_complet
+    from elevi e join clasa c on (e.clasa_id = c.clasa_id)
+    join specializare s on (c.specializare_id = s.specializare_id)
+    where s.specializare_nume = v_nume;
+    return nume_complet;
+exception
+    when no_data_found then
+        raise_application_error(-20000, 'Nu exista elevi care studiaza la specializarea data');
+    when too_many_rows then
+        raise_application_error(-20001, 'Exista mai multi elevi');
+    when others then
+        raise_application_error(-20002, 'Alta eroare');
+end nume_elev;
+
+    -- 9
+    procedure nume_profesor(v_nume profil.profil_nume%type)
+is
+    nume profesori.profesor_nume%type;
+begin
+    select distinct p.profesor_nume
+    into nume
+    from profesori p join preda pr on (p.profesor_id = pr.profesor_id)
+    join clasa c on (c.clasa_id = pr.clasa_id)
+    join specializare s on (s.specializare_id = c.specializare_id)
+    join profil pro on (pro.profil_id = s.profil_id)
+    where pro.profil_nume = v_nume;
+    
+    dbms_output.put_line(nume);
+    
+exception
+
+    when no_data_found then
+        raise_application_error(-20000, 'Nu exista un profil cu numele dat');
+    when too_many_rows then
+        raise_application_error(-20001, 'Exista mai multi profesori care predau la acest profil');
+    when others then
+        raise_application_error(-20002, 'Alta eroare');
+
+end nume_profesor;
+
+end pachet13;
+/
+
+
+       
