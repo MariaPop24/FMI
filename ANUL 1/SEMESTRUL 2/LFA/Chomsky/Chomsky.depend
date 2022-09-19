@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1655048901 source:c:\users\popma\onedrive\documents\chomsky\main.cpp
+	<iostream>
+	<fstream>
+	<map>
+	<vector>
+	<string>
+
